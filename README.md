@@ -1,4 +1,4 @@
-# XYlofy AI
+# WEEK-1 TASK
 
 A small data analysis project using housing data.
 
