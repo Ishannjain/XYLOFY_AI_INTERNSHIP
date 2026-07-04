@@ -1,0 +1,9 @@
+Top 3 High Anomalies:
+- Week ending 2015-03-22: Sales = $37,703.67 (Likely a major corporate bulk order or mid-year promotional event.)
+- Week ending 2018-12-02: Sales = $35,998.90 (Likely holiday season surge, Black Friday promotions, or year-end clearing.)
+- Week ending 2018-11-18: Sales = $30,572.45 (Likely holiday season surge, Black Friday promotions, or year-end clearing.)
+
+Top 3 Low Anomalies:
+- Week ending 2015-02-22: Sales = $224.91 (Likely post-holiday seasonal drop or early-year reset.)
+- Week ending 2015-01-04: Sales = $304.51 (Likely post-holiday seasonal drop or early-year reset.)
+- Week ending 2016-01-24: Sales = $358.52 (Likely post-holiday seasonal drop or early-year reset.)

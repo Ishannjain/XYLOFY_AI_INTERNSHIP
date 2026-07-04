@@ -1,0 +1,66 @@
+Executive Business Report
+=========================
+
+Executive Summary
+-----------------
+This report summarizes the sales forecasting and demand intelligence work completed for the retail business. The analysis shows that sales are growing overall, with clear seasonal patterns and a few unusual spikes that may reflect promotions, special events, or operational issues. The forecasting models suggest that the business can plan ahead with reasonable confidence, especially for the next three months, while the segmentation analysis highlights which products should be stocked more aggressively or monitored more closely.
+
+Key Findings from EDA and Forecasting
+------------------------------------
+- The business generated the highest revenue from the Technology category, making it a major growth driver.
+- The East region showed the most consistent sales growth over time, which suggests a stronger and more predictable demand pattern.
+- Average shipping time was measurable and varied by region, indicating that delivery performance may affect customer experience and stock planning.
+- Monthly sales showed recurring seasonal behavior, with peaks in certain months and stronger activity in particular parts of the year.
+- The forecasting models were tested on recent months and used to project the next three months of sales.
+
+Three-Month Sales Forecast
+--------------------------
+The forecast indicates that sales are expected to remain positive over the next three months, with a likely range around the central estimate. In plain terms, the business should expect sales to continue at a steady level, but there is still some uncertainty around the exact value each month. The forecast range suggests that the company should prepare for normal variation while avoiding overreaction to short-term changes.
+
+Top 3 Anomalies Detected
+------------------------
+1. Week of 2015-03-22
+   - Sales were unusually high compared with surrounding weeks.
+   - Likely cause: a major promotion, bulk order, or one-off event that drove demand sharply above normal levels.
+
+2. Week of 2015-02-08
+   - Sales were unusually low compared with the surrounding pattern.
+   - Likely cause: a distribution issue, delayed shipment, missing stock, or temporary demand drop.
+
+3. Week of 2015-01-25
+   - Sales were also lower than expected for that part of the year.
+   - Likely cause: short-term supply disruption or lower customer activity during that period.
+
+Product Demand Segmentation Findings
+-----------------------------------
+The product portfolio was grouped into demand segments based on sales volume, growth, volatility, and order value.
+- High Volume, Stable Demand: Products in this group are reliable and should be stocked consistently.
+- Growing Demand: These products are increasing in popularity and should receive higher inventory attention.
+- Declining Demand: These products may not justify heavy stocking and should be managed more carefully.
+- Low Volume, High Volatility: These products are difficult to predict and should be monitored closely with tighter stock controls.
+
+Recommended Stocking Strategy by Segment
+---------------------------------------
+- High Volume, Stable Demand: Keep steady inventory levels and maintain regular replenishment.
+- Growing Demand: Increase safety stock and plan ahead for seasonal peaks.
+- Declining Demand: Reduce excess inventory and review whether the product should remain in the assortment.
+- Low Volume, High Volatility: Use smaller, more frequent replenishment and avoid overstocking.
+
+Three Concrete Business Recommendations
+-------------------------------------
+1. Prioritize inventory planning for high-growth categories and regions.
+   - Data backing: The Technology category generated the highest revenue, and the East region showed the most consistent growth. These are the best places to focus planning and investment.
+
+2. Use the anomaly alerts to investigate unusual sales weeks quickly.
+   - Data backing: Several unusual weeks were detected, including some with very high sales and others with unusually low sales. These may signal promotions, stock issues, or operational disruption.
+
+3. Adjust stocking policies by demand segment rather than using one rule for all products.
+   - Data backing: The segmentation analysis shows that products behave very differently depending on demand pattern, volatility, and growth rate.
+
+Risk and Limitation
+-------------------
+One important limitation is that the system is based on historical patterns and may not fully capture sudden changes such as new competitors, major promotions, economic shifts, or unexpected supply chain disruptions. As a result, forecasts should be used as a planning guide, not as a guarantee of future results.
+
+Conclusion
+----------
+Overall, this system provides a practical way for the business to understand sales patterns, anticipate near-term demand, and make better inventory decisions. With careful use and regular review, it can become a valuable tool for both supply chain planning and financial forecasting.
