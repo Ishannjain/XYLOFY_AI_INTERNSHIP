@@ -64,3 +64,6 @@ One important limitation is that the system is based on historical patterns and 
 Conclusion
 ----------
 Overall, this system provides a practical way for the business to understand sales patterns, anticipate near-term demand, and make better inventory decisions. With careful use and regular review, it can become a valuable tool for both supply chain planning and financial forecasting.
+
+streamlit link
+https://salesprediction9capstone.streamlit.app/
