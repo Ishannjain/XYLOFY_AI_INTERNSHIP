@@ -2,13 +2,9 @@ import pandas as pd
 import streamlit as st
 from pathlib import Path
 import logging
-import warnings
-
-# Suppress deprecation warnings
-warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 # Configure logging
-logging.basicConfig(level=logging.ERROR)
+logging.basicConfig(level=logging.WARNING)
 
 st.set_page_config(page_title="Sales Forecasting Dashboard", page_icon="📈", layout="wide")
 
@@ -120,7 +116,7 @@ if page == "Sales Overview":
         with tab2:
             grouped = filtered_df.groupby(["Region", "Category"])["Sales"].sum().reset_index()
             pivot = grouped.pivot(index="Region", columns="Category", values="Sales").fillna(0)
-            st.dataframe(grouped, width="full")
+            st.dataframe(grouped, use_container_width=True)
             st.bar_chart(pivot)
 
 elif page == "Forecast Explorer":
@@ -147,7 +143,7 @@ elif page == "Forecast Explorer":
             st.subheader(f"{selected_target} {scope} Forecast")
             st.line_chart(forecast_df.set_index("Date"))
         with tab2:
-            st.dataframe(display_df, width="full")
+            st.dataframe(display_df, use_container_width=True)
 
     if not model_metrics.empty:
         best_model = model_metrics.sort_values("RMSE").iloc[0]
@@ -164,7 +160,7 @@ elif page == "Anomaly Report":
     anomaly_image = charts_dir / "weekly_anomalies_comparison.png"
     if anomaly_image.exists():
         try:
-            st.image(str(anomaly_image), caption="Anomaly detection chart", width="full")
+            st.image(str(anomaly_image), caption="Anomaly detection chart", use_container_width=True)
         except Exception as e:
             st.error(f"Error loading anomaly chart: {e}")
     
@@ -179,7 +175,7 @@ elif page == "Anomaly Report":
     anomaly_table = anomaly_table.sort_values("Order Date")
 
     st.subheader("Detected Anomaly Dates")
-    st.dataframe(anomaly_table.reset_index(drop=True), width="full")
+    st.dataframe(anomaly_table.reset_index(drop=True), use_container_width=True)
 
 else:
     st.title("Product Demand Segments")
@@ -188,7 +184,7 @@ else:
     cluster_image = charts_dir / "product_demand_clusters.png"
     if cluster_image.exists():
         try:
-            st.image(str(cluster_image), caption="Product demand segmentation chart", width="full")
+            st.image(str(cluster_image), caption="Product demand segmentation chart", use_container_width=True)
         except Exception as e:
             st.error(f"Error loading cluster chart: {e}")
 
@@ -202,4 +198,4 @@ else:
         cluster_df = cluster_df[cluster_df["Cluster Label"] == selected_cluster]
 
     st.subheader("Sub-categories by Demand Cluster")
-    st.dataframe(cluster_df[["Sub-Category", "Cluster Label", "Cluster"]], width="full")
+    st.dataframe(cluster_df[["Sub-Category", "Cluster Label", "Cluster"]], use_container_width=True)
