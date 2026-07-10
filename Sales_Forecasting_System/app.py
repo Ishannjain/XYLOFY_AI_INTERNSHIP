@@ -1,6 +1,10 @@
 import pandas as pd
 import streamlit as st
 from pathlib import Path
+import logging
+
+# Configure logging
+logging.basicConfig(level=logging.WARNING)
 
 st.set_page_config(page_title="Sales Forecasting Dashboard", page_icon="📈", layout="wide")
 
@@ -10,11 +14,15 @@ charts_dir = root / "Charts"
 
 @st.cache_data
 def load_sales_data():
-    df = pd.read_csv(root / "train.csv")
-    df["Order Date"] = pd.to_datetime(df["Order Date"], dayfirst=True)
-    df["Year"] = df["Order Date"].dt.year
-    df["Month"] = df["Order Date"].dt.month
-    return df
+    try:
+        df = pd.read_csv(root / "train.csv")
+        df["Order Date"] = pd.to_datetime(df["Order Date"], dayfirst=True)
+        df["Year"] = df["Order Date"].dt.year
+        df["Month"] = df["Order Date"].dt.month
+        return df
+    except Exception as e:
+        st.error(f"Error loading sales data: {e}")
+        st.stop()
 
 
 @st.cache_data
@@ -26,22 +34,30 @@ def load_model_metrics():
 
 @st.cache_data
 def load_forecast(scope, selected):
-    file_map = {
-        ("Category", "Furniture"): charts_dir / "forecast_furniture_category.csv",
-        ("Category", "Office Supplies"): charts_dir / "forecast_office_supplies_category.csv",
-        ("Category", "Technology"): charts_dir / "forecast_technology_category.csv",
-        ("Region", "East"): charts_dir / "forecast_east_region.csv",
-        ("Region", "West"): charts_dir / "forecast_west_region.csv",
-    }
-    path = file_map.get((scope, selected))
-    if path is None or not path.exists():
+    try:
+        file_map = {
+            ("Category", "Furniture"): charts_dir / "forecast_furniture_category.csv",
+            ("Category", "Office Supplies"): charts_dir / "forecast_office_supplies_category.csv",
+            ("Category", "Technology"): charts_dir / "forecast_technology_category.csv",
+            ("Region", "East"): charts_dir / "forecast_east_region.csv",
+            ("Region", "West"): charts_dir / "forecast_west_region.csv",
+        }
+        path = file_map.get((scope, selected))
+        if path is None or not path.exists():
+            return pd.DataFrame(columns=["Date", "Forecast"])
+        df = pd.read_csv(path)
+        df["Date"] = pd.to_datetime(df["Date"])
+        return df
+    except Exception as e:
+        logging.error(f"Error loading forecast: {e}")
         return pd.DataFrame(columns=["Date", "Forecast"])
-    df = pd.read_csv(path)
-    df["Date"] = pd.to_datetime(df["Date"])
-    return df
 
 
 sales_df = load_sales_data()
+if sales_df is None or sales_df.empty:
+    st.error("No sales data available. Please ensure train.csv exists in the project directory.")
+    st.stop()
+
 model_metrics = load_model_metrics()
 
 page = st.sidebar.radio(
@@ -143,9 +159,16 @@ elif page == "Anomaly Report":
 
     anomaly_image = charts_dir / "weekly_anomalies_comparison.png"
     if anomaly_image.exists():
-        st.image(str(anomaly_image), caption="Anomaly detection chart", use_container_width=True)
-
-    anomaly_df = pd.read_csv(charts_dir / "weekly_anomalies.csv")
+        try:
+            st.image(str(anomaly_image), caption="Anomaly detection chart", use_container_width=True)
+        except Exception as e:
+            st.error(f"Error loading anomaly chart: {e}")
+    
+    try:
+        anomaly_df = pd.read_csv(charts_dir / "weekly_anomalies.csv")
+    except FileNotFoundError:
+        st.error("Anomaly data file not found. Please run the analysis notebook first.")
+        st.stop()
     anomaly_df["Order Date"] = pd.to_datetime(anomaly_df["Order Date"])
     anomaly_mask = anomaly_df["IF_Anomaly"] | anomaly_df["Z_Anomaly"]
     anomaly_table = anomaly_df.loc[anomaly_mask, ["Order Date", "Sales", "IF_Anomaly", "Z_Anomaly"]].copy()
@@ -160,9 +183,16 @@ else:
 
     cluster_image = charts_dir / "product_demand_clusters.png"
     if cluster_image.exists():
-        st.image(str(cluster_image), caption="Product demand segmentation chart", use_container_width=True)
+        try:
+            st.image(str(cluster_image), caption="Product demand segmentation chart", use_container_width=True)
+        except Exception as e:
+            st.error(f"Error loading cluster chart: {e}")
 
-    cluster_df = pd.read_csv(charts_dir / "product_clusters.csv")
+    try:
+        cluster_df = pd.read_csv(charts_dir / "product_clusters.csv")
+    except FileNotFoundError:
+        st.error("Cluster data file not found. Please run the analysis notebook first.")
+        st.stop()
     selected_cluster = st.selectbox("Filter by cluster", options=["All"] + sorted(cluster_df["Cluster Label"].astype(str).unique().tolist()))
     if selected_cluster != "All":
         cluster_df = cluster_df[cluster_df["Cluster Label"] == selected_cluster]
